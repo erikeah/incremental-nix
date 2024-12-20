@@ -2,19 +2,23 @@
 let
   almostEmpty = ./almostEmptyDir;
 in
-{
-  callWithIntermediatesFrom =
-    package: callback:
-    let
-      requestedIntermediates =
-        if builtins.isAttrs package && package.intermediates != null then
-          package.intermediates
-        else
-          almostEmpty;
-
-    in
-    callback {
-        inherit requestedIntermediates;
+rec {
+  getRequestedIntermediates =
+    package:
+    if builtins.isAttrs package && package.intermediates != null then
+      package.intermediates
+    else
+      almostEmpty;
+  withIntermediates =
+    pkg: expr:
+    expr {
+      requestedIntermediates = getRequestedIntermediates pkg;
     };
-  # TODO: callWithIntermediates = callback: {};
+  withIntermediatesOnSet =
+    pkgSet: set:
+    if builtins.isAttrs pkgSet then
+      builtins.mapAttrs (key: expr: withIntermediates pkgSet.${key} expr) set
+    else
+      builtins.mapAttrs (key: expr: withIntermediates null expr) set;
+
 }

@@ -1,7 +1,7 @@
 {
-  description = "Intermediates made easy?";
+  description = "Simple library to work with intermediates";
   inputs = { };
   outputs = inputs: {
-      lib = import ./lib.nix {};
+    lib = import ./lib.nix { };
   };
 }
