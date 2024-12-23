@@ -7,3 +7,7 @@ Files to be used lately can be saved on `intermediates`, which is just a regular
 `out`. Take a look to this [example](./example/flake.nix) if you wish.
 
 [Documentation](./docs) or `nixdoc --file lib.nix --category "main" --description "" > docs/index.md`
+
+## Acknowledgements
+
+Thanks to garnix.io for this great [blog post](https://garnix.io/blog/incremental-builds).
